@@ -7,13 +7,14 @@ from discord import app_commands
 import random
 import asyncio
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
-print("TOKEN:", os.getenv("DISCORD_TOKEN"))
- 
-TOKEN = os.getenv("DISCORD_TOKEN")
+
+# Primero definimos el TOKEN
+TOKEN = "MTQ5MDY5OTI2NzUzMzE3Njk3Mw.GxxQ4D.phI9EkBBUn188d_TAC4ZRwH1TSapgDWVUnLn_c"
+# Ahora sí podemos imprimirlo
+print("TOKEN:", TOKEN)
 
 @bot.event
 async def on_ready():
@@ -90,13 +91,10 @@ async def evento(ctx):
             "{persona1} está tranquilamente sentada viendo anime hasta que de repente viene {persona2} y le recomienda un hentai.",
             "{persona1} fue al baño y {persona2} le empezó a narrar la partida.",
             "{persona1} estaba en su funeral hasta que llegó {persona2} a pedir cargador.",
-            "{persona1} abrió TikTok y apareció {persona2} bailando en su para ti."
-            "{persona1} estaba jugando al escondite hasta que {persona2} dijo 'como mi papá'."
-            "{persona1} estaba viendo Doraemon hasta que {persona2} preguntó si tenía bolsillo para órganos."
+            "{persona1} abrió TikTok y apareció {persona2} bailando en su para ti.",
             "{persona1} estaba jugando al escondite hasta que {persona2} dijo 'como mi papá'.",
-            "{persona1} estaba viendo Bob Esponja hasta que {persona2} preguntó '¿por qué no se ahoga?'.",
-
-
+            "{persona1} estaba viendo Doraemon hasta que {persona2} preguntó si tenía bolsillo para órganos.",
+            "{persona1} estaba viendo Bob Esponja hasta que {persona2} preguntó '¿por qué no se ahoga?'."
         ]
 
         persona1, persona2 = random.sample(personas, 2)
@@ -469,7 +467,7 @@ async def hdp(ctx):
     ganador_juego = max(puntos, key=puntos.get) # Obtenemos el jugador con más puntos
     await ctx.send(f"🎉 ¡FIN DEL JUEGO! El ganador es {ganador_juego.mention} con {puntos[ganador_juego]} puntos. ¡Este tiene potencial para islas! 🏝️") # Anunciamos al ganador finalx
 
-# 1. El comando con los contextos de instalación para MD habilitados
+# El comando con los contextos de instalación para MD habilitados
 @bot.tree.command(name="barrabasadometro", description="Mide el calibre de una barrabasada.")
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True) # <- Permite MDs
 @app_commands.allowed_installs(guilds=True, users=True)                     # <- Permite instalar en usuario
@@ -502,7 +500,4 @@ async def barrabasado_slash(interaction: discord.Interaction, nivel: int):
     # MANDAMOS
     await interaction.response.send_message(embed=embed_barrabasada)
 
-
-   
-        
 bot.run(TOKEN)
