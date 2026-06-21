@@ -11,7 +11,9 @@ import asyncio
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
+print("TOKEN:", os.getenv("DISCORD_TOKEN"))
  
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 @bot.event
 async def on_ready():
@@ -503,4 +505,4 @@ async def barrabasado_slash(interaction: discord.Interaction, nivel: int):
 
    
         
-bot.run(os.getenv("TOKEN"))
+bot.run(TOKEN)
