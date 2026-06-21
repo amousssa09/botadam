@@ -1,19 +1,21 @@
 from tabnanny import check
-
 import os
 import discord
 from discord.ext import commands
 from discord import app_commands
 import random
 import asyncio
+from dotenv import load_dotenv
+
+# Cargar las variables del archivo .env
+load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Primero definimos el TOKEN
-TOKEN = "MTQ5MDY5OTI2NzUzMzE3Njk3Mw.GxxQ4D.phI9EkBBUn188d_TAC4ZRwH1TSapgDWVUnLn_c"
-# Ahora sí podemos imprimirlo
+# Ahora sí leemos el token de forma segura
+TOKEN = os.getenv("DISCORD_TOKEN")
 print("TOKEN:", TOKEN)
 
 @bot.event
