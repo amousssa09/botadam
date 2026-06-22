@@ -516,14 +516,30 @@ async def barrabasado_slash(interaction: discord.Interaction, nivel: int):
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
 async def meme(ctx, texto: str, foto: discord.Attachment = None):
-    # Le decimos al bot que se descargue los bytes de la foto
-    foto_bytes = archivo_final.read()
 
-    # Abrimos dichos bytes usando Image.open y lo que tiene edentro "io.BytesIO"
+    # Guardamos la foto en la variable archivo final
+    archivo_final = foto
+    # Si el archivo viene con foto, el archivo pos es la foto que subes xd
+    if archivo_final is None and ctx.message.attachments:
+        archivo_final =  ctx.message.attachments
+
+    if archivo_final is None:
+        await ctx.send("Socio, la imagen la sacamos del culo o q?")
+        return
+    
+    # Obtenemos la foto y la descargamos
+
+    foto_bytes = archivo_final.read()
     imagen = Image.open(io.BytesIO(foto_bytes))
 
-    # Comprobamos que funciona
-    await ctx.send(f"imagen abierta socio, pille le doy incluso las medidas de tu foto: {imagen.width} x {imagen.height}")
+    dibujo = ImageDraw.Draw(imagen)
+
+    dibujo.text((20,20), texto, fill="white")
+
+    await ctx.send("Ahi lo tienes mi rey")
+
+
+
 
 
 bot.run(TOKEN)
