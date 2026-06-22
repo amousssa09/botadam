@@ -1,6 +1,8 @@
 from tabnanny import check
 import os
+import io
 import discord
+from PIL import Image, ImageDraw, ImageFont
 from discord.ext import commands
 from discord import app_commands
 import random
@@ -81,6 +83,7 @@ async def saludar(ctx):
         f"Hola {ctx.author.mention}, en primer lugar no me obligues a saludarte que te doy dos vueltas, y en segundo lugar, que dios lo bendiga."
     )
 
+# EVENTO
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -109,6 +112,7 @@ async def evento(ctx):
     except Exception as e:
         await ctx.send(f"Error: {e}")
 
+# INSULTO
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -125,7 +129,7 @@ async def insultar(ctx, usuario: discord.Member):
     
     insulto = random.choice(insultos)
     await ctx.send(f"{usuario.mention}, {insulto}")
-
+# CONSEJO
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -144,13 +148,14 @@ async def consejo(ctx):
     consejo = random.choice(consejos)
 
     await ctx.send(consejo)
-
+# MIISH
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
 async def miish(ctx):
     await ctx.send("bah ya vino una autista ya me voy")
 
+# PREGUNTA
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -173,6 +178,7 @@ async def preguntar(ctx, *, pregunta):
     respuesta = random.choice(respuestas)
     await ctx.send(respuesta)
 
+# CARAOCRUZ
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -199,7 +205,8 @@ async def caraocruz(ctx):
 
     else: 
         await ctx.send("Salio cruz, te salvaste de la pregunta")
-        
+
+ # EXPANSIÓN DE DOMINIO     
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -227,7 +234,7 @@ async def expansiondedominio(ctx, usuario: discord.User):
 
     await ctx.send(embed=embed, view=vista)
 
-
+# AHORCADO
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -295,6 +302,7 @@ async def ahorcado(ctx):
     else:
         await ctx.send(f"Has perdido. La palabra era: {palabra_secreta}")
 
+# HDP
 @bot.hybrid_command()
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -469,6 +477,7 @@ async def hdp(ctx):
     ganador_juego = max(puntos, key=puntos.get) # Obtenemos el jugador con más puntos
     await ctx.send(f"🎉 ¡FIN DEL JUEGO! El ganador es {ganador_juego.mention} con {puntos[ganador_juego]} puntos. ¡Este tiene potencial para islas! 🏝️") # Anunciamos al ganador finalx
 
+# BARRABASADOMETRO
 # El comando con los contextos de instalación para MD habilitados
 @bot.tree.command(name="barrabasadometro", description="Mide el calibre de una barrabasada.")
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True) # <- Permite MDs
@@ -501,5 +510,20 @@ async def barrabasado_slash(interaction: discord.Interaction, nivel: int):
     embed_barrabasada.set_image(url=datos["url"])
     # MANDAMOS
     await interaction.response.send_message(embed=embed_barrabasada)
+
+# MEME
+@bot.hybrid_command(name="meme", description="crea un meme personalizao")
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@app_commands.allowed_installs(guilds=True, users=True)
+async def meme(ctx, texto: str, foto: discord.Attachment = None):
+    # Le decimos al bot que se descargue los bytes de la foto
+    foto_bytes = archivo_final.read()
+
+    # Abrimos dichos bytes usando Image.open y lo que tiene edentro "io.BytesIO"
+    imagen = Image.open(io.BytesIO(foto_bytes))
+
+    # Comprobamos que funciona
+    await ctx.send(f"imagen abierta socio, pille le doy incluso las medidas de tu foto: {imagen.width} x {imagen.height}")
+
 
 bot.run(TOKEN)
